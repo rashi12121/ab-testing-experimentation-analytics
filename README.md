@@ -561,7 +561,6 @@ There are several areas I would like to explore if I continue developing this pr
 
 ## 🎓 Why I Built This Project
 
-I built this project as part of my preparation for further study in **Data Science**.
 
 I wanted to work on something that combines programming, statistics, data analysis, and business decision-making rather than focusing only on machine learning.
 
@@ -580,10 +579,4 @@ That is the approach I wanted to practice through this project.
 GitHub:  
 https://github.com/rashi12121
 
----
 
-## 📌 Note
-
-This is a personal portfolio project created for learning and academic purposes.
-
-The dataset is synthetic and does not contain real customer information.
