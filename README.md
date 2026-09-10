@@ -1,43 +1,51 @@
 # A/B Testing & Experimentation Analytics
 
-An end-to-end Data Science project that evaluates whether a redesigned e-commerce checkout experience improves user conversion and revenue.
+An end-to-end Data Science project I built to understand how A/B testing can be used to make better product decisions using data.
 
-The project demonstrates the complete A/B testing workflow, from experiment design and data validation to statistical hypothesis testing, confidence intervals, bootstrap analysis, segmentation, and business recommendations.
+For this project, I created an e-commerce experiment where users were randomly divided into two groups. One group experienced the existing checkout process, while the other group experienced a redesigned checkout.
+
+The main question I wanted to answer was:
+
+> **Does the redesigned checkout experience actually improve user conversion?**
+
+I wanted to go beyond simply comparing two conversion rates, so I worked through the complete experimentation process — from data validation and experiment design to statistical testing, confidence intervals, bootstrap analysis, segmentation, and business interpretation.
 
 ---
 
 ## 📌 Business Problem
 
-An e-commerce company has redesigned its checkout experience with the goal of increasing the percentage of users who complete a purchase.
+An e-commerce company has redesigned its checkout experience with the goal of increasing the number of users who complete a purchase.
 
-The product team wants to determine whether the new checkout experience performs better than the existing experience.
+The product team believes that the new checkout design will improve conversion, but before rolling it out to everyone, they want evidence that the improvement is real and not simply the result of random variation.
 
-The experiment compares two groups:
+The experiment compares:
 
 - **Control:** Existing checkout experience
 - **Treatment:** Redesigned checkout experience
 
-The primary business question is:
+The main business question is:
 
-> Does the redesigned checkout experience significantly improve user conversion?
+> **Does the redesigned checkout experience significantly improve user conversion?**
 
 ---
 
 ## 🎯 Project Objectives
 
-The project aims to:
+Through this project, I wanted to:
 
-1. Validate the quality and randomization of experiment data.
-2. Compare conversion rates between control and treatment groups.
-3. Quantify absolute and relative conversion lift.
-4. Test statistical significance using hypothesis testing.
-5. Estimate confidence intervals for the treatment effect.
-6. Use bootstrap resampling to evaluate uncertainty.
-7. Analyze revenue impact.
-8. Identify differences in treatment effects across user segments.
-9. Account for multiple statistical comparisons.
-10. Evaluate both statistical and practical significance.
-11. Provide a data-driven recommendation for product rollout.
+1. Understand how an A/B test is structured.
+2. Validate the quality of the experiment data.
+3. Check whether the control and treatment groups are reasonably balanced.
+4. Compare conversion rates between the two groups.
+5. Calculate absolute and relative conversion lift.
+6. Test statistical significance using hypothesis testing.
+7. Estimate confidence intervals for the treatment effect.
+8. Use bootstrap resampling to understand uncertainty.
+9. Analyze the impact on revenue.
+10. Explore treatment performance across different user segments.
+11. Understand the problem of multiple statistical comparisons.
+12. Think about statistical significance and practical business significance.
+13. Understand why power and sample-size planning are important before running an experiment.
 
 ---
 
@@ -53,20 +61,23 @@ Users receive the redesigned checkout experience.
 
 ### Primary Metric
 
-**Conversion Rate**
+The primary metric for the experiment is **Conversion Rate**.
 
-\[
-Conversion\ Rate =
-\frac{Converted\ Users}{Total\ Users}
-\]
+```text
+Conversion Rate = Converted Users / Total Users
+```
 
 ### Secondary Metrics
+
+I also looked at:
 
 - Revenue per User
 - Average Order Value
 - Total Revenue
 
 ### Guardrail Metrics
+
+In a real-world experiment, improving conversion should not come at the cost of other important metrics.
 
 Potential guardrail metrics include:
 
@@ -81,7 +92,9 @@ Potential guardrail metrics include:
 
 The project uses a reproducible synthetic dataset containing approximately **50,000 users**.
 
-The dataset includes:
+I created the dataset specifically for this project so that the analysis could be reproduced without using private or confidential customer information.
+
+Each user belongs to either the control or treatment group and has additional information about their device, country, traffic source, sessions, conversion, and revenue.
 
 | Column | Description |
 |---|---|
@@ -95,7 +108,24 @@ The dataset includes:
 | `converted` | Whether the user completed a purchase |
 | `revenue` | Revenue generated by the user |
 
+---
 
+## 🔍 Data Validation
+
+Before performing any statistical analysis, I first checked whether the dataset looked reasonable.
+
+The validation includes:
+
+- Missing values
+- Duplicate users
+- Invalid values
+- Control/treatment sample sizes
+- Conversion values
+- Revenue values
+- Group distribution
+- User characteristics across experiment groups
+
+This was an important part of the project because a statistical test cannot compensate for poor-quality experiment data.
 
 ---
 
@@ -103,34 +133,36 @@ The dataset includes:
 
 ### 1. Hypothesis Testing
 
-The primary hypothesis is:
+For the primary conversion metric, I defined the following hypotheses.
 
-**Null Hypothesis (H₀):**
+### Null Hypothesis (H₀)
 
-\[
-p_{treatment} \leq p_{control}
-\]
+```text
+p_treatment <= p_control
+```
 
 The redesigned checkout does not improve conversion.
 
-**Alternative Hypothesis (H₁):**
+### Alternative Hypothesis (H₁)
 
-\[
-p_{treatment} > p_{control}
-\]
+```text
+p_treatment > p_control
+```
 
 The redesigned checkout improves conversion.
 
 The experiment uses:
 
-- Significance level: **α = 0.05**
-- Confidence level: **95%**
+```text
+Significance Level (α) = 0.05
+Confidence Level = 95%
+```
 
 ---
 
 ### 2. Two-Proportion Z-Test
 
-A two-proportion z-test is used to determine whether the difference in conversion rates between the control and treatment groups is statistically significant.
+Since conversion is a binary outcome, I used a **two-proportion z-test** to compare the conversion rates of the control and treatment groups.
 
 The analysis reports:
 
@@ -138,56 +170,95 @@ The analysis reports:
 - P-value
 - Statistical significance
 
+The purpose of the test is to determine whether the observed difference between the groups is large enough to provide evidence that the treatment has an actual effect.
+
 ---
 
 ### 3. Chi-Square Test
 
-A Chi-square test of independence is used as an additional validation of the relationship between experiment assignment and conversion outcome.
+I also used a **Chi-square test of independence** to examine the relationship between:
+
+- Experiment group
+- Conversion outcome
+
+I included this as an additional statistical check alongside the two-proportion z-test.
 
 ---
 
-### 4. Absolute Lift
+## 📈 Conversion Lift
 
-Absolute treatment lift is calculated as:
+### Absolute Lift
 
-\[
-Absolute\ Lift =
-Conversion_{Treatment} - Conversion_{Control}
-\]
+Absolute lift measures the difference in conversion rates between treatment and control.
 
----
+```text
+Absolute Lift =
+Treatment Conversion Rate - Control Conversion Rate
+```
 
-### 5. Relative Lift
+### Relative Lift
 
-Relative lift is calculated as:
+Relative lift measures the improvement relative to the control group's conversion rate.
 
-\[
-Relative\ Lift =
-\frac{Conversion_{Treatment} - Conversion_{Control}}
-{Conversion_{Control}}
-\]
+```text
+Relative Lift =
+(Treatment Conversion Rate - Control Conversion Rate)
+/
+Control Conversion Rate
+```
 
-Relative lift helps quantify the percentage improvement over the baseline.
-
----
-
-### 6. Confidence Intervals
-
-A 95% confidence interval is calculated for the treatment effect to quantify statistical uncertainty around the observed conversion lift.
+Using both measures makes it easier to understand the size of the treatment effect.
 
 ---
 
-### 7. Bootstrap Analysis
+## 📏 Confidence Intervals
 
-Bootstrap resampling is performed using **5,000 iterations** to estimate the sampling distribution of the treatment effect.
+A conversion-rate difference is only an estimate based on the users included in the experiment.
 
-The bootstrap analysis provides an empirical 95% confidence interval for the difference in conversion rates.
+To understand the uncertainty around the observed treatment effect, I calculated a **95% confidence interval**.
+
+The confidence interval provides a range of plausible values for the true treatment effect.
 
 ---
 
-## 📈 Exploratory Segment Analysis
+## 🔄 Bootstrap Analysis
 
-Treatment effects are analyzed across multiple user segments, including:
+I also used bootstrap resampling to get another view of the uncertainty in the experiment.
+
+The analysis performs **5,000 bootstrap iterations**.
+
+For each iteration:
+
+1. Users are sampled with replacement from the control group.
+2. Users are sampled with replacement from the treatment group.
+3. Conversion rates are calculated.
+4. The difference between the two conversion rates is stored.
+
+The resulting bootstrap distribution is then used to estimate an empirical **95% confidence interval** for the treatment effect.
+
+This helped me understand the variability of the observed conversion difference rather than relying only on a single p-value.
+
+---
+
+## 💰 Revenue Analysis
+
+Conversion is the primary metric, but I also wanted to understand whether the experiment could have an impact on revenue.
+
+The analysis includes:
+
+- Total Revenue
+- Revenue per User
+- Average Order Value
+
+This helps answer a broader question:
+
+> **Does the redesigned checkout only increase the number of conversions, or does it also improve the overall business outcome?**
+
+---
+
+## 📊 Segment Analysis
+
+After analyzing the overall experiment, I explored whether the treatment effect was consistent across different types of users.
 
 ### Device
 
@@ -211,55 +282,308 @@ Treatment effects are analyzed across multiple user segments, including:
 - Email
 - Referral
 
-Segment analysis helps identify whether the redesigned checkout performs consistently across different types of users.
+For each segment, I compared treatment and control conversion rates.
+
+The purpose of this analysis is to identify patterns that may be useful for further investigation.
+
+I did not treat every segment-level difference as a confirmed finding because smaller subgroups may not have enough statistical power.
 
 ---
 
 ## ⚠️ Multiple Testing
 
-When analyzing multiple user segments, the probability of observing false-positive results increases.
+When testing many segments at the same time, the probability of finding a statistically significant result by chance increases.
 
-The project therefore considers multiple-comparison correction methods such as:
+For example, if I test many countries, devices, and traffic sources independently, some results may appear significant even when there is no real treatment effect.
+
+To address this issue, the project considers:
 
 - Bonferroni correction
 - False Discovery Rate (FDR)
 
-Segment-level findings are treated as exploratory unless the experiment was specifically designed and powered to detect heterogeneous treatment effects.
+Segment-level findings are therefore treated as exploratory unless the experiment was specifically designed and powered to detect differences between those segments.
 
 ---
 
 ## 📐 Experiment Power Analysis
 
-A complete experimentation workflow should determine the required sample size before launching an experiment.
+One thing I wanted to understand from this project is that A/B testing is not only about analyzing results after an experiment has finished.
+
+Before starting an experiment, we should also determine whether we have enough users to detect an improvement that would actually matter.
 
 Important parameters include:
 
 - Baseline conversion rate
-- Minimum detectable effect (MDE)
-- Statistical significance level
+- Minimum Detectable Effect (MDE)
+- Significance level
 - Desired statistical power
+- Required sample size
 
-Typical experimental assumptions:
+Typical assumptions used in experimentation are:
 
 ```text
 Alpha = 0.05
 Power = 80%
 Confidence Level = 95%
-## 📊 Key Results
+```
 
-| Metric | Result |
-|---|---:|
-| Control Conversion Rate | 11.52% |
-| Treatment Conversion Rate | 12.74% |
-| Absolute Lift | +1.22 pp |
-| Relative Lift | +10.59% |
-| P-Value | < 0.05 |
-| 95% CI | [0.XX%, 2.XX%] |
+Power analysis helps reduce the risk of running an experiment that is too small to detect a meaningful improvement.
 
-### 🧠 Conclusion
+---
 
-The redesigned checkout experience produced a statistically significant improvement in conversion compared with the control group.
+## 📊 Statistical Significance vs. Business Significance
 
-The treatment generated approximately **10.6% relative improvement in conversion**, indicating a potentially meaningful business impact.
+One of the main lessons from this project is that **statistical significance and business significance are not the same thing**.
 
-However, the final rollout decision should also consider revenue per user, guardrail metrics, implementation costs, and long-term user behavior.
+A result can be statistically significant but still have a very small business impact.
+
+For example, a small increase in conversion might be statistically significant with a large enough sample, but the additional revenue may not justify the engineering or product effort required to implement the change.
+
+For that reason, I would consider both:
+
+### Statistical Significance
+
+> Is the observed difference unlikely to be explained by random chance?
+
+### Practical Significance
+
+> Is the improvement large enough to matter to the business?
+
+---
+
+## 🧠 Experiment Decision Framework
+
+I would not make the final product decision based only on the p-value.
+
+The decision should consider:
+
+1. Conversion lift
+2. Confidence interval
+3. Statistical significance
+4. Revenue impact
+5. Guardrail metrics
+6. Segment behavior
+7. Experiment power
+8. Practical business impact
+
+The goal is to use statistics as a decision-making tool rather than treating a p-value as the entire answer.
+
+---
+
+## 📌 Experiment Results
+
+The experiment contains **25,000 users in each group**.
+
+| Metric | Control | Treatment |
+|---|---:|---:|
+| Users | 25,000 | 25,000 |
+| Conversion Rate | 11.50% | 12.74% |
+| Absolute Lift | — | +1.24 pp |
+| Relative Lift | — | +10.79% |
+
+The treatment group has a higher observed conversion rate than the control group.
+
+The statistical tests, confidence intervals, and bootstrap analysis are used in the notebook to determine whether the observed improvement provides sufficient evidence for a product decision.
+
+> **Note:** The dataset is synthetic and created for learning and portfolio purposes. These results do not represent real company performance.
+
+---
+
+## 🛠️ Tools & Technologies
+
+### Programming & Analysis
+
+- Python
+- Pandas
+- NumPy
+- SciPy
+
+### Visualization
+
+- Matplotlib
+- Seaborn
+
+### Data & Querying
+
+- SQL
+
+### Development
+
+- Jupyter Notebook
+- Google Colab
+- GitHub
+
+### Statistical Concepts
+
+- A/B Testing
+- Hypothesis Testing
+- Two-Proportion Z-Test
+- Chi-Square Test
+- Confidence Intervals
+- Bootstrap Resampling
+- Statistical Significance
+- Practical Significance
+- Multiple Testing
+- Experiment Power
+- Minimum Detectable Effect (MDE)
+
+---
+
+## 📁 Project Structure
+
+```text
+ab-testing-experimentation-analytics/
+│
+├── data/
+│   └── ab_test_users.csv
+│
+├── notebooks/
+│   └── ab_testing_analysis.ipynb
+│
+├── reports/
+│   ├── experiment_summary.md
+│   └── conversion_rate.png
+│
+├── sql/
+│   └── experiment_metrics.sql
+│
+├── src/
+│   └── analysis.py
+│
+├── .gitignore
+├── README.md
+└── requirements.txt
+```
+
+---
+
+## ▶️ How to Run
+
+### Google Colab
+
+The project can be run using Google Colab without installing Python locally.
+
+Clone the repository:
+
+```python
+!git clone https://github.com/rashi12121/ab-testing-experimentation-analytics.git
+```
+
+Move into the project directory:
+
+```python
+%cd ab-testing-experimentation-analytics
+```
+
+Then open:
+
+```text
+notebooks/ab_testing_analysis.ipynb
+```
+
+Run the notebook cells from top to bottom.
+
+---
+
+### Local Jupyter Environment
+
+Install the required packages:
+
+```bash
+pip install -r requirements.txt
+```
+
+Start Jupyter Notebook:
+
+```bash
+jupyter notebook
+```
+
+Then open:
+
+```text
+notebooks/ab_testing_analysis.ipynb
+```
+
+---
+
+## 📚 What I Learned
+
+Working on this project helped me understand that A/B testing is much more than comparing two percentages.
+
+Some of the main things I learned were:
+
+- Why randomization matters in an experiment.
+- Why data validation should happen before statistical testing.
+- How to compare two conversion rates statistically.
+- How to interpret p-values and confidence intervals.
+- How bootstrap resampling can be used to estimate uncertainty.
+- Why segment analysis needs to be treated carefully.
+- How multiple testing can increase false positives.
+- Why statistical significance does not automatically mean business significance.
+- Why power and MDE should be considered before an experiment starts.
+- How statistical analysis can be connected to an actual product decision.
+
+---
+
+## 🚧 Limitations
+
+There are several limitations to this project.
+
+- The dataset is synthetic.
+- User behavior is simulated rather than collected from a real product.
+- The experiment does not represent an actual production deployment.
+- Long-term effects of the redesigned checkout are not measured.
+- Some segment-level analyses may not have enough statistical power.
+- Revenue assumptions are simplified.
+- Real-world experimentation can involve additional issues such as repeated users, interference, seasonality, and changes in user behavior over time.
+
+---
+
+## 🚀 Future Improvements
+
+There are several areas I would like to explore if I continue developing this project:
+
+- Detailed sample-size and power calculations
+- Minimum Detectable Effect (MDE) analysis
+- Bayesian A/B testing
+- CUPED variance reduction
+- Sequential testing
+- Logistic regression
+- Heterogeneous treatment effect analysis
+- More detailed revenue analysis
+- Experiment monitoring dashboard
+- Streamlit dashboard
+- Automated experiment reports
+- More realistic experiment simulations
+
+---
+
+## 🎓 Why I Built This Project
+
+I built this project as part of my preparation for further study in **Data Science**.
+
+I wanted to work on something that combines programming, statistics, data analysis, and business decision-making rather than focusing only on machine learning.
+
+A/B testing interested me because the final goal is not simply to make a prediction. The goal is to use data to decide whether a change should actually be made.
+
+While working on this project, I became more comfortable with the idea that good data science involves understanding the data, questioning the results, measuring uncertainty, and then connecting the analysis back to the original business problem.
+
+That is the approach I wanted to practice through this project.
+
+---
+
+## 👤 Author
+
+**Rashi**
+
+GitHub:  
+https://github.com/rashi12121
+
+---
+
+## 📌 Note
+
+This is a personal portfolio project created for learning and academic purposes.
+
+The dataset is synthetic and does not contain real customer information.
