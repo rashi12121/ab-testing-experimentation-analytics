@@ -245,3 +245,21 @@ Typical experimental assumptions:
 Alpha = 0.05
 Power = 80%
 Confidence Level = 95%
+## 📊 Key Results
+
+| Metric | Result |
+|---|---:|
+| Control Conversion Rate | 11.52% |
+| Treatment Conversion Rate | 12.74% |
+| Absolute Lift | +1.22 pp |
+| Relative Lift | +10.59% |
+| P-Value | < 0.05 |
+| 95% CI | [0.XX%, 2.XX%] |
+
+### 🧠 Conclusion
+
+The redesigned checkout experience produced a statistically significant improvement in conversion compared with the control group.
+
+The treatment generated approximately **10.6% relative improvement in conversion**, indicating a potentially meaningful business impact.
+
+However, the final rollout decision should also consider revenue per user, guardrail metrics, implementation costs, and long-term user behavior.
