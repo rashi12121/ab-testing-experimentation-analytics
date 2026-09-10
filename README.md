@@ -77,4 +77,4 @@ The project uses a deterministic random seed, so the dataset and analysis are re
 - Applied two-proportion z-tests, chi-square testing, confidence intervals, and bootstrap resampling to quantify treatment lift and statistical uncertainty.
 - Performed segment-level analysis across device, geography, and acquisition channel to identify heterogeneous treatment effects and support rollout recommendations.
 
-> The dataset is synthetic and created specifically for portfolio/educational use.
+
