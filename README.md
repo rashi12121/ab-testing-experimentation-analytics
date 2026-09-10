@@ -385,7 +385,6 @@ The treatment group has a higher observed conversion rate than the control group
 
 The statistical tests, confidence intervals, and bootstrap analysis are used in the notebook to determine whether the observed improvement provides sufficient evidence for a product decision.
 
-> **Note:** The dataset is synthetic and created for learning and portfolio purposes. These results do not represent real company performance.
 
 ---
 
@@ -526,17 +525,6 @@ Some of the main things I learned were:
 
 ---
 
-## 🚧 Limitations
-
-There are several limitations to this project.
-
-- The dataset is synthetic.
-- User behavior is simulated rather than collected from a real product.
-- The experiment does not represent an actual production deployment.
-- Long-term effects of the redesigned checkout are not measured.
-- Some segment-level analyses may not have enough statistical power.
-- Revenue assumptions are simplified.
-- Real-world experimentation can involve additional issues such as repeated users, interference, seasonality, and changes in user behavior over time.
 
 ---
 
